@@ -1,0 +1,15 @@
+<%# <%= turbo_stream.prepend "line_item_dates", @line_item_date %> %>
+<%# <%= turbo_stream.update "line_item_dates" do %>
+  <%# <%= render @quote.line_item_dates.ordered %> %>
+<%# <% end  my approach is to refresh the line_item_dates completely %> %> %> 
+<%= turbo_stream.update LineItemDate.new, "" %>
+<% if previous_date = @line_item_date.previous_date %>
+  <%= turbo_stream.after previous_date do %>
+    <%= render @line_item_date, quote: @quote %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.prepend "line_item_dates" do %>
+    <%= render @line_item_date, quote: @quote %>
+  <% end %>
+<% end %>
+<%= render_turbo_stream_flash_messages %>

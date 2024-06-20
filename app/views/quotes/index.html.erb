@@ -1,4 +1,4 @@
-<%= turbo_stream_from "quotes_stream" %>
+<%= turbo_stream_from current_company, "quotes_stream" %>
 ``
 <main class="container">
   <div class="header">
@@ -8,9 +8,11 @@
                 class: "btn btn--primary",
                 data: { turbo_frame: dom_id(Quote.new) } %>
   </div>
+
   <%= turbo_frame_tag Quote.new %>
 
   <%= turbo_frame_tag "quotes" do %>
+    <%= render "quotes/empty_state" %>
     <%= render @quotes %>
-  <% end %>
+  <% end %> 
 </main>
